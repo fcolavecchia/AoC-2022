@@ -1,15 +1,12 @@
-module Runs
+module Runs.Day1 
 
 open NUnit.Framework
 
 open AoC 
 
-[<SetUp>]
-let Setup () =
-    ()
 
 [<Test>]
-let rec ``Day 1 Test`` () =
+let  ``Day 1 Test`` () =
     
     let testFile = Day1.fileName + ".test"
     
@@ -30,7 +27,7 @@ let rec ``Day 1 Test`` () =
     
 
 [<Test>]
-let rec ``Day 1`` () =
+let  ``Day 1`` () =
     
     let testFile = Day1.fileName 
     
