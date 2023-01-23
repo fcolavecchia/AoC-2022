@@ -18,12 +18,20 @@ let  ``Day 5 Test`` () =
         
     let testFile = fileName + ".test"
     
-    let crates,moves = getItems testFile        
-    printfn "%A" crates
-    printfn "%A" moves
+    let createItems,movesItems = getItems testFile        
+    printfn "%A" createItems
+    printfn "%A" movesItems
     
-    printfn "%A" (getCrates crates)
-    printfn "%A" (getMoves moves)
+    printfn "%A" (getCrates createItems)
+    printfn "%A" (getMoves movesItems)
+    
+    let crates = getCrates createItems
+    let moves = getMoves movesItems
+    
+    // moves
+    // |> List.iter 
+    
+    
     // let repeatedItems =  getRepeatedItem Part1.rangeIsIn items   
     //
     // printfn "%A" repeatedItems

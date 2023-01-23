@@ -32,7 +32,7 @@ module AoC.Day5
     let chunkByThree (str: string) =
         
         let idx = 3
-        let rec loop n (inStr: string) outList =
+        let rec loop (inStr: string) outList =
             if System.String.IsNullOrEmpty(inStr)
             then 
                 outList
@@ -41,16 +41,16 @@ module AoC.Day5
                 let tail = inStr.[idx+1..] 
                 
                 let nextList =  List.append outList [s] 
-                loop (n+1) tail nextList 
+                loop tail nextList 
                  
-        loop 0 str []    
+        loop str []    
         
     let getMove (str: string) =
         let s = str.Split(" from ")
         let m = s[1].Split(" to ")
         {
-            From = m[0] |> int
-            To = m[1] |> int
+            From = (m[0] |> int )- 1 
+            To = (m[1] |> int) - 1 
             HowMany = s[0].Split("move ").[1] |> int           
         }
             
@@ -61,9 +61,22 @@ module AoC.Day5
                 |> List.map chunkByThree
                 |> List.transpose
                 |> List.map List.rev
+                |> List.map ( fun l -> l |> List.filter (fun s -> s <> "   " ))
+                |> List.indexed
+                |> Map.ofList 
                 
         l
         
     let getMoves moves =
         moves
-        |> List.map getMove 
+        |> List.map getMove
+        
+
+    let moveCrates (crates: Map<int,string list>) (move: Move) =
+        let nFrom = crates.[move.From].Length - move.HowMany 
+        let nextFrom, moving = crates.[move.From] |> List.splitAt nFrom
+        let nextTo = crates[move.To] @ (moving |> List.rev) 
+        crates
+        |> Map.add move.To nextTo
+        |> Map.add move.From nextFrom 
+        
