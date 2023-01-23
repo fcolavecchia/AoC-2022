@@ -5,6 +5,12 @@ open System.IO
 
 module General =
     let aocPath = "/Users/flavioc/Codes/AoC/2022"
+    
+    let readInput file =
+        let lines = File.ReadLines(Path.Combine(aocPath,file))
+                    |> Seq.toList  
+        
+        lines    
 
 module Day1 =
     
