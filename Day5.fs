@@ -60,7 +60,7 @@ module AoC.Day5
                 |> List.take (crates.Length-1)
                 |> List.map chunkByThree
                 |> List.transpose
-                |> List.map List.rev
+                |> List.map List.rev 
                 |> List.map ( fun l -> l |> List.filter (fun s -> s <> "   " ))
                 |> List.indexed
                 |> Map.ofList 
@@ -72,21 +72,21 @@ module AoC.Day5
         |> List.map getMove
         
 
-    let moveCrates (crates: Map<int,string list>) (move: Move) =
+    let moveCrates f (crates: Map<int,string list>) (move: Move) =
         let nFrom = crates.[move.From].Length - move.HowMany 
         let nextFrom, moving = crates.[move.From] |> List.splitAt nFrom
-        let nextTo = crates[move.To] @ (moving |> List.rev) 
+        let nextTo = crates[move.To] @ (moving |> f) 
         crates
         |> Map.add move.To nextTo
         |> Map.add move.From nextFrom 
         
-    let rec moveAll crates (moves: Move list) =
+    let rec moveAll f crates (moves: Move list) =
 
         match moves with
         | [] -> crates
         | m :: t ->
-            let newCrates = moveCrates crates m 
-            moveAll newCrates t
+            let newCrates = moveCrates f crates m 
+            moveAll f newCrates t
             
     let getTopCrates (crates: Map<int,string list>) =
         crates
