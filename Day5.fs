@@ -80,3 +80,20 @@ module AoC.Day5
         |> Map.add move.To nextTo
         |> Map.add move.From nextFrom 
         
+    let rec moveAll crates (moves: Move list) =
+
+        match moves with
+        | [] -> crates
+        | m :: t ->
+            let newCrates = moveCrates crates m 
+            moveAll newCrates t
+            
+    let getTopCrates (crates: Map<int,string list>) =
+        crates
+        |> Map.map (fun k l -> l |> List.rev |> List.head)
+        |> Map.toList
+        |> List.map snd
+        |> List.map (fun s -> s |> String.filter System.Char.IsLetter )
+        |> List.fold (fun a s -> a + s) ""
+        
+        
